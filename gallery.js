@@ -70,7 +70,7 @@ function doSearch(query) {
     pagination.appendChild(message)
 
     // Just select nine for now
-    const myObjects = search['objectIDs'].slice(0, 9);
+    const myObjects = search['objectIDs'].slice(0, 6);
 
     // Load individual object data and insert into DOM
     // this waits for them all to load before building the first article

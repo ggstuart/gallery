@@ -8,6 +8,7 @@ body {
 
 header {
   background-color: #666;
+  color: #ddd;
   overflow: auto;
   padding: 0 1em;
 }
