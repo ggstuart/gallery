@@ -1,0 +1,162 @@
+@import url('https://fonts.googleapis.com/css?family=Bellota+Text&display=swap');
+
+body {
+  background-color: black;
+  margin: 0;
+  font-family: "Bellota Text", sans-serif;
+}
+
+header {
+  background-color: #666;
+  overflow: auto;
+  padding: 0 1em;
+}
+
+main {
+  margin: 0;
+  background-color: #333;
+  color: #ddd;
+}
+
+section {
+  box-sizing: border-box;
+  padding: 0.5em 1em;
+}
+
+article {
+  box-sizing: border-box;
+  transition: 0.5s;
+  animation: fadeIn 2s;
+}
+
+section.error {
+  background-color: yellow;
+  color: red;
+  text-align: center;
+  animation: fadeIn 2s;
+}
+
+figure {
+  background-color: #ddd;
+  background-size: cover;
+  background-repeat: no-repeat;
+  color: #333;
+  margin: 0;
+  width: 100%;
+  height: 50vw;
+  position: relative;
+}
+
+article.modal {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  z-index: 100;
+}
+article.modal figure {
+  height: 100vh;
+  background-size: contain;
+}
+
+article.modal figure::after {
+  position: fixed;
+  top: 0.1em;
+  right: 0.1em;
+  content: "×";
+  font-size: 3em;
+  font-weight: bold;
+  color: white;
+  margin: 0;
+  padding: 0;
+  background-color: hsla(0, 0%, 10%, 0.5);
+}
+article.modal figcaption {
+  opacity: 0;
+}
+
+figcaption {
+  position: absolute;
+  box-sizing: border-box;
+  width: 100%;
+  top: 0;
+  left: 0;
+  bottom: 0;
+  padding: 0.25em 0.5em;
+  font-size: 2em;
+  background-color: hsla(0, 0%, 10%, 0.9);
+  color: white;
+  transition: 1s;
+  opacity: 0.5;
+}
+
+
+img {
+  width: 100%;
+}
+
+article img {
+  box-sizing: border-box;
+  transition: 0.5s;
+  display: block;
+}
+
+.loading {
+  opacity: 0;
+}
+
+.flex {
+  display: flex;
+  justify-content: center;
+  align-items: stretch;
+}
+
+.flex * {
+  margin: 0.25em;
+}
+
+#gallery {
+  width: 100%;
+  margin: 0 auto;
+  padding: 0;
+}
+
+@keyframes fadeIn {
+  0% {
+    opacity: 0;
+  }
+  100% {
+    opacity: 1;
+  }
+
+}
+
+@media screen and (min-width: 700px) {
+  #gallery {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: stretch;
+    margin: 0 auto;
+  }
+  article {
+    width: 50%;
+  }
+}
+
+@media screen and (min-width: 1200px) {
+  article {
+    width: 33%;
+  }
+}
+
+@media (hover: hover) {
+  figure {
+    background-blend-mode: luminosity;
+  }
+  article.modal figure, article:hover figure {
+    background-blend-mode: normal;
+  }
+  article:hover figcaption {
+    opacity: 0;
+  }
+}
