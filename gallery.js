@@ -47,6 +47,13 @@ function buildNode(object) {
   return article;
 }
 
+function clear(element) {
+  while(element.firstChild) {
+    element.removeChild(element.firstChild);
+  }
+
+}
+
 function doSearch(query) {
   // clear any errorMessages
   const error = document.querySelector('#errorMessage');
@@ -57,19 +64,15 @@ function doSearch(query) {
     if (!search['objectIDs']) throw `No results found for "${query}", try again.`
 
     // clear any old results
-    while(gallery.firstChild) {
-      gallery.removeChild(gallery.firstChild);
-    }
+    clear(gallery);
 
     // show how many results were found
-    while(pagination.firstChild) {
-      pagination.removeChild(pagination.firstChild);
-    }
+    clear(pagination);
     const message = document.createElement('div');
     message.textContent = `Found ${search['objectIDs'].length} results for "${query}"`;
     pagination.appendChild(message)
 
-    // Just select nine for now
+    // Just select six for now
     const myObjects = search['objectIDs'].slice(0, 6);
 
     // Load individual object data and insert into DOM
@@ -94,4 +97,9 @@ searchBtn.addEventListener('click', ev => {
     doSearch(search.value)
     search.value = null;
   }
+});
+
+search.addEventListener('keyup', ev => {
+  console.log(ev.key);
+  if (ev.key == "Enter") searchBtn.click();
 });

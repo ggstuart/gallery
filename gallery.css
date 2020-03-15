@@ -108,12 +108,16 @@ article img {
 
 .flex {
   display: flex;
-  justify-content: center;
+  justify-content: flex-start;
   align-items: stretch;
+  font-size: 1.1em;
+  flex-wrap: wrap;
 }
 
 .flex * {
-  margin: 0.25em;
+  white-space: nowrap;
+  font-size: 1.1em;
+  margin: 0 0.25em;
 }
 
 #gallery {
