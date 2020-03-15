@@ -61,35 +61,55 @@ async function doSearch(query) {
   const error = document.querySelector('#errorMessage');
   if(error) error.remove();
 
+  try {
+    const search = await getSearch(query);
+
     // check we got some results
     if (!search['objectIDs']) throw `No results found for "${query}", try again.`
 
     // clear any old results
     clear(gallery);
+    clear(pagination);
 
     // show how many results were found
-    clear(pagination);
     const message = document.createElement('div');
     message.textContent = `Found ${search['objectIDs'].length} results for "${query}"`;
     pagination.appendChild(message)
 
-    // Just select six for now
-    const myObjects = search['objectIDs'].slice(0, 6);
+    // Select the first six
+    let pageStart = 0;
+    let pageLength = 6;
 
-    // Load individual object data and insert into DOM
-    // this waits for them all to load before building the first article
-    // It might be better to build the first articles as soon as the data are availble
-    // because one might stall for ages
-    Promise.all(myObjects.map(getObject)).then(result => {
-      const nodes = result.map(buildNode);
-      nodes.forEach(node => gallery.appendChild(node));
-    });
-  }).catch(error => {
+    const nextButton = document.createElement("button");
+    nextButton.textContent = "next";
+    nextButton.addEventListener('click', ev => {
+      clear(gallery);
+      pageStart += pageLength;
+      loadObjects(search['objectIDs'].slice(pageStart, pageStart + pageLength));
+    })
+    pagination.append(nextButton);
+
+    await loadObjects(search['objectIDs'].slice(pageStart, pageStart + pageLength))
+
+  } catch(error) {
     const errorMessage = document.createElement('section');
     errorMessage.textContent = error;
     errorMessage.classList.add('error');
     errorMessage.setAttribute('id', 'errorMessage');
     main.insertBefore(errorMessage, gallery);
+  };
+}
+
+function loadObjects(myObjects) {
+  // const myObjects = search['objectIDs'].slice(pageStart, pageStart + pageLength);
+
+  // Load individual object data and insert into DOM
+  // this waits for them all to load before building the first article
+  // It might be better to build the first articles as soon as the data are availble
+  // because one might stall for ages
+  Promise.all(myObjects.map(getObject)).then(result => {
+    const nodes = result.map(buildNode);
+    nodes.forEach(node => gallery.appendChild(node));
   });
 }
 
