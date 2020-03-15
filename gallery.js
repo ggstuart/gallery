@@ -39,9 +39,11 @@ function buildNode(object) {
     article.classList.toggle('modal');
     const imageLarge = document.createElement('img');
     imageLarge.src = object.primaryImage;
+    imageLarge.style.display = "none";
+    article.appendChild(imageLarge);
     imageLarge.addEventListener('load', ev => {
       figure.style.backgroundImage = `url('${object.primaryImage}')`;
-      // imageLarge.remove();
+      imageLarge.remove();
     })
   });
   return article;
@@ -54,12 +56,11 @@ function clear(element) {
 
 }
 
-function doSearch(query) {
+async function doSearch(query) {
   // clear any errorMessages
   const error = document.querySelector('#errorMessage');
   if(error) error.remove();
 
-  getSearch(query).then(search => {
     // check we got some results
     if (!search['objectIDs']) throw `No results found for "${query}", try again.`
 
@@ -100,6 +101,5 @@ searchBtn.addEventListener('click', ev => {
 });
 
 search.addEventListener('keyup', ev => {
-  console.log(ev.key);
   if (ev.key == "Enter") searchBtn.click();
 });
